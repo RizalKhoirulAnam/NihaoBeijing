@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK 1 Vocabulary</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .initials-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden p-6 sm:p-8">
+        <div class="flex flex-col items-center sm:items-start mb-6">
+            <h1 class="text-4xl font-bold text-gray-800 mb-1">HSK 1 Vocabulary</h1>
+            <p class="text-sm text-gray-500">© NihaoBeijing, Created by Rizal KA</p>
+        </div>
+        
+        <p class="text-center sm:text-left text-gray-600 mb-4">Daftar lengkap kosakata HSK 1 dengan pinyin, terjemahan Bahasa Indonesia, dan contoh kalimat. Klik pada kartu fonetik untuk melihat cara pengucapan.</p>
+        
+        <!-- Bagian untuk fonetik Pinyin -->
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Initial Sounds (聲母)</h2>
+        <div id="initials-container" class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-4 mb-8">
+            <!-- Kartu fonetik akan dirender di sini oleh JavaScript -->
+        </div>
+
+        <!-- Bagian untuk kosakata HSK 1 -->
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">HSK 1 Vocabulary</h2>
+        <div id="vocabulary-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Kartu kosakata akan dirender di sini oleh JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Data untuk fonetik Pinyin/Bopomofo.
+        const initials = [
+            {"pinyin": "b", "bopomofo": "ㄅ"},
+            {"pinyin": "p", "bopomofo": "ㄆ"},
+            {"pinyin": "m", "bopomofo": "ㄇ"},
+            {"pinyin": "f", "bopomofo": "ㄈ"},
+            {"pinyin": "d", "bopomofo": "ㄉ"},
+            {"pinyin": "t", "bopomofo": "ㄊ"},
+            {"pinyin": "n", "bopomofo": "ㄋ"},
+            {"pinyin": "l", "bopomofo": "ㄌ"},
+            {"pinyin": "g", "bopomofo": "ㄍ"},
+            {"pinyin": "k", "bopomofo": "ㄎ"},
+            {"pinyin": "h", "bopomofo": "ㄏ"},
+            {"pinyin": "j", "bopomofo": "ㄐ"},
+            {"pinyin": "q", "bopomofo": "ㄑ"},
+            {"pinyin": "x", "bopomofo": "ㄒ"},
+            {"pinyin": "zh", "bopomofo": "ㄓ"},
+            {"pinyin": "ch", "bopomofo": "ㄔ"},
+            {"pinyin": "sh", "bopomofo": "ㄕ"},
+            {"pinyin": "r", "bopomofo": "ㄖ"},
+            {"pinyin": "z", "bopomofo": "ㄗ"},
+            {"pinyin": "c", "bopomofo": "ㄘ"},
+            {"pinyin": "s", "bopomofo": "ㄙ"}
+        ];
+
+        // Data kosakata HSK 1
+        const vocabulary = [
+            { "character": "爱", "pinyin": "ài", "indonesian": "cinta, sayang", "example": "我爱你 (Wǒ ài nǐ) - Saya cinta kamu." },
+            { "character": "八", "pinyin": "bā", "indonesian": "delapan", "example": "我有八本书 (Wǒ yǒu bā běn shū) - Saya punya delapan buku." },
+            { "character": "爸爸", "pinyin": "bàba", "indonesian": "ayah, bapak", "example": "我爸爸很好 (Wǒ bàba hěn hǎo) - Ayah saya sangat baik." },
+            { "character": "杯子", "pinyin": "bēizi", "indonesian": "cangkir, gelas", "example": "这是一个杯子 (Zhè shì yīgè bēizi) - Ini adalah sebuah cangkir." },
+            { "character": "北京", "pinyin": "Běijīng", "indonesian": "Beijing", "example": "我在北京 (Wǒ zài Běijīng) - Saya ada di Beijing." },
+            { "character": "本", "pinyin": "běn", "indonesian": "kata satuan untuk buku", "example": "这本书很好 (Zhè běn shū hěn hǎo) - Buku ini sangat bagus." },
+            { "character": "不客气", "pinyin": "búkèqi", "indonesian": "sama-sama", "example": "谢谢你。不客气 (Xièxiè nǐ. Búkèqi) - Terima kasih. Sama-sama." },
+            { "character": "不", "pinyin": "bù", "indonesian": "tidak", "example": "我不是学生 (Wǒ bú shì xuéshēng) - Saya bukan seorang pelajar." },
+            { "character": "菜", "pinyin": "cài", "indonesian": "masakan, sayuran", "example": "我喜欢吃中国菜 (Wǒ xǐhuān chī Zhōngguó cài) - Saya suka makan masakan Tionghoa." },
+            { "character": "茶", "pinyin": "chá", "indonesian": "teh", "example": "我想喝茶 (Wǒ xiǎng hē chá) - Saya ingin minum teh." },
+            { "character": "吃", "pinyin": "chī", "indonesian": "makan", "example": "我们一起吃饭 (Wǒmen yīqǐ chīfàn) - Mari kita makan bersama." },
+            { "character": "出租车", "pinyin": "chūzūchē", "indonesian": "taksi", "example": "我坐出租车去机场 (Wǒ zuò chūzūchē qù jīchǎng) - Saya naik taksi ke bandara." },
+            { "character": "打电话", "pinyin": "dǎ diànhuà", "indonesian": "menelepon", "example": "他在打电话 (Tā zài dǎ diànhuà) - Dia sedang menelepon." },
+            { "character": "大", "pinyin": "dà", "indonesian": "besar", "example": "这个苹果很大 (Zhège píngguǒ hěn dà) - Apel ini sangat besar." },
+            { "character": "的", "pinyin": "de", "indonesian": "partikel kepemilikan", "example": "这是我的书 (Zhè shì wǒ de shū) - Ini adalah buku saya." },
+            { "character": "点", "pinyin": "diǎn", "indonesian": "jam, pukul", "example": "现在三点 (Xiànzài sān diǎn) - Sekarang pukul tiga." },
+            { "character": "电脑", "pinyin": "diànnǎo", "indonesian": "komputer", "example": "我有一个新电脑 (Wǒ yǒu yīgè xīn diànnǎo) - Saya punya sebuah komputer baru." },
+            { "character": "电视", "pinyin": "diànshì", "indonesian": "televisi", "example": "我喜欢看电视 (Wǒ xǐhuān kàn diànshì) - Saya suka menonton televisi." },
+            { "character": "电影", "pinyin": "diànyǐng", "indonesian": "film", "example": "我们去看电影吧 (Wǒmen qù kàn diànyǐng ba) - Mari kita pergi menonton film." },
+            { "character": "东西", "pinyin": "dōngxi", "indonesian": "barang, benda", "example": "我想买一些东西 (Wǒ xiǎng mǎi yīxiē dōngxi) - Saya ingin membeli beberapa barang." },
+            { "character": "都", "pinyin": "dōu", "indonesian": "semua", "example": "我们都是学生 (Wǒmen dōu shì xuéshēng) - Kami semua adalah pelajar." },
+            { "character": "读", "pinyin": "dú", "indonesian": "membaca", "example": "我喜欢读书 (Wǒ xǐhuān dúshū) - Saya suka membaca buku." },
+            { "character": "对不起", "pinyin": "duìbuqǐ", "indonesian": "maaf", "example": "对不起，我迟到了 (Duìbuqǐ, wǒ chídào le) - Maaf, saya terlambat." },
+            { "character": "多", "pinyin": "duō", "indonesian": "banyak", "example": "你有多少钱？ (Nǐ yǒu duōshǎo qián?) - Berapa banyak uang yang kamu punya?" },
+            { "character": "多少", "pinyin": "duōshǎo", "indonesian": "berapa banyak", "example": "这个多少钱？ (Zhège duōshǎo qián?) - Berapa harga ini?" },
+            { "character": "儿子", "pinyin": "érzi", "indonesian": "anak laki-laki", "example": "他有一个儿子 (Tā yǒu yīgè érzi) - Dia punya seorang anak laki-laki." },
+            { "character": "二", "pinyin": "èr", "indonesian": "dua", "example": "我有两本书 (Wǒ yǒu liǎng běn shū) - Saya punya dua buku." },
+            { "character": "饭店", "pinyin": "fàndiàn", "indonesian": "restoran, hotel", "example": "我们在饭店吃饭 (Wǒmen zài fàndiàn chīfàn) - Kami makan di restoran." },
+            { "character": "飞机", "pinyin": "fēijī", "indonesian": "pesawat terbang", "example": "我坐飞机去中国 (Wǒ zuò fēijī qù Zhōngguó) - Saya naik pesawat terbang ke Tiongkok." },
+            { "character": "分钟", "pinyin": "fēnzhōng", "indonesian": "menit", "example": "等我五分钟 (Děng wǒ wǔ fēnzhōng) - Tunggu saya lima menit." },
+            { "character": "高兴", "pinyin": "gāoxìng", "indonesian": "gembira, senang", "example": "很高兴认识你 (Hěn gāoxìng rènshì nǐ) - Sangat senang bisa berkenalan denganmu." },
+            { "character": "个", "pinyin": "gè", "indonesian": "kata satuan umum", "example": "我有一个苹果 (Wǒ yǒu yīgè píngguǒ) - Saya punya sebuah apel." },
+            { "character": "工作", "pinyin": "gōngzuò", "indonesian": "pekerjaan, bekerja", "example": "我的工作很忙 (Wǒ de gōngzuò hěn máng) - Pekerjaan saya sangat sibuk." },
+            { "character": "狗", "pinyin": "gǒu", "indonesian": "anjing", "example": "这是一只狗 (Zhè shì yī zhǐ gǒu) - Ini adalah seekor anjing." },
+            { "character": "汉语", "pinyin": "Hànyǔ", "indonesian": "bahasa Mandarin", "example": "我学习汉语 (Wǒ xuéxí Hànyǔ) - Saya belajar bahasa Mandarin." },
+            { "character": "好", "pinyin": "hǎo", "indonesian": "baik, bagus", "example": "你好 (Nǐ hǎo) - Halo." },
+            { "character": "号", "pinyin": "hào", "indonesian": "nomor, tanggal", "example": "今天是几号？ (Jīntiān shì jǐ hào?) - Hari ini tanggal berapa?" },
+            { "character": "喝", "pinyin": "hē", "indonesian": "minum", "example": "我喜欢喝水 (Wǒ xǐhuān hē shuǐ) - Saya suka minum air." },
+            { "character": "和", "pinyin": "hé", "indonesian": "dan", "example": "我和你 (Wǒ hé nǐ) - Saya dan kamu." },
+            { "character": "很", "pinyin": "hěn", "indonesian": "sangat", "example": "我很好 (Wǒ hěn hǎo) - Saya sangat baik." },
+            { "character": "后面", "pinyin": "hòumiàn", "indonesian": "di belakang", "example": "商店在学校后面 (Shāngdiàn zài xuéxiào hòumiàn) - Toko ada di belakang sekolah." },
+            { "character": "回", "pinyin": "huí", "indonesian": "pulang, kembali", "example": "我回家了 (Wǒ huí jiā le) - Saya sudah pulang ke rumah." },
+            { "character": "会", "pinyin": "huì", "indonesian": "bisa, dapat, akan", "example": "我会说汉语 (Wǒ huì shuō Hànyǔ) - Saya bisa berbicara bahasa Mandarin." },
+            { "character": "几", "pinyin": "jǐ", "indonesian": "berapa", "example": "你有几本书？ (Nǐ yǒu jǐ běn shū?) - Kamu punya berapa buku?" },
+            { "character": "家", "pinyin": "jiā", "indonesian": "rumah", "example": "这是我的家 (Zhè shì wǒ de jiā) - Ini adalah rumah saya." },
+            { "character": "叫", "pinyin": "jiào", "indonesian": "memanggil, bernama", "example": "我叫大卫 (Wǒ jiào Dàwèi) - Nama saya David." },
+            { "character": "今天", "pinyin": "jīntiān", "indonesian": "hari ini", "example": "今天是星期一 (Jīntiān shì xīngqīyī) - Hari ini hari Senin." },
+            { "character": "九", "pinyin": "jiǔ", "indonesian": "sembilan", "example": "现在九点 (Xiànzài jiǔ diǎn) - Sekarang pukul sembilan." },
+            { "character": "开", "pinyin": "kāi", "indonesian": "membuka, menyalakan", "example": "请开门 (Qǐng kāi mén) - Tolong buka pintunya." },
+            { "character": "看", "pinyin": "kàn", "indonesian": "melihat, menonton", "example": "我看电视 (Wǒ kàn diànshì) - Saya menonton televisi." },
+            { "character": "看到", "pinyin": "kàndào", "indonesian": "melihat", "example": "我看到你了 (Wǒ kàndào nǐ le) - Saya sudah melihatmu." },
+            { "character": "块", "pinyin": "kuài", "indonesian": "mata uang, cepat", "example": "这块钱 (Zhè kuài qián) - Uang ini." },
+            { "character": "来", "pinyin": "lái", "indonesian": "datang", "example": "他来了 (Tā lái le) - Dia sudah datang." },
+            { "character": "老师", "pinyin": "lǎoshī", "indonesian": "guru", "example": "我是老师 (Wǒ shì lǎoshī) - Saya adalah guru." },
+            { "character": "了", "pinyin": "le", "indonesian": "partikel perubahan keadaan", "example": "我吃饭了 (Wǒ chīfàn le) - Saya sudah makan." },
+            { "character": "冷", "pinyin": "lěng", "indonesian": "dingin", "example": "今天很冷 (Jīntiān hěn lěng) - Hari ini sangat dingin." },
+            { "character": "里面", "pinyin": "lǐmiàn", "indonesian": "di dalam", "example": "钱在包里面 (Qián zài bāo lǐmiàn) - Uang ada di dalam tas." },
+            { "character": "六", "pinyin": "liù", "indonesian": "enam", "example": "我有六个苹果 (Wǒ yǒu liù gè píngguǒ) - Saya punya enam buah apel." },
+            { "character": "妈妈", "pinyin": "māma", "indonesian": "ibu", "example": "我妈妈很漂亮 (Wǒ māma hěn piàoliang) - Ibu saya sangat cantik." },
+            { "character": "吗", "pinyin": "ma", "indonesian": "partikel tanya", "example": "你好吗？ (Nǐ hǎo ma?) - Apa kabarmu?" },
+            { "character": "买", "pinyin": "mǎi", "indonesian": "membeli", "example": "我想买衣服 (Wǒ xiǎng mǎi yīfu) - Saya ingin membeli baju." },
+            { "character": "没关系", "pinyin": "méiguānxì", "indonesian": "tidak apa-apa", "example": "对不起。没关系 (Duìbuqǐ. Méiguānxì) - Maaf. Tidak apa-apa." },
+            { "character": "没有", "pinyin": "méiyǒu", "indonesian": "tidak punya, tidak ada", "example": "我没有钱 (Wǒ méiyǒu qián) - Saya tidak punya uang." },
+            { "character": "那", "pinyin": "nà", "indonesian": "itu", "example": "那是谁？ (Nà shì shéi?) - Siapakah itu?" },
+            { "character": "哪儿", "pinyin": "nǎr", "indonesian": "di mana", "example": "你去哪儿？ (Nǐ qù nǎr?) - Kamu pergi ke mana?" },
+            { "character": "那儿", "pinyin": "nàr", "indonesian": "di sana", "example": "他在那儿 (Tā zài nàr) - Dia ada di sana." },
+            { "character": "呢", "pinyin": "ne", "indonesian": "partikel tanya", "example": "你呢？ (Nǐ ne?) - Bagaimana denganmu?" },
+            { "character": "能", "pinyin": "néng", "indonesian": "bisa, dapat", "example": "我能帮你吗？ (Wǒ néng bāng nǐ ma?) - Apakah saya bisa membantumu?" },
+            { "character": "你", "pinyin": "nǐ", "indonesian": "kamu", "example": "你好 (Nǐ hǎo) - Halo." },
+            { "character": "年", "pinyin": "nián", "indonesian": "tahun", "example": "今年是二零二五年 (Jīnnián shì èr líng èr wǔ nián) - Tahun ini adalah 2025." },
+            { "character": "女儿", "pinyin": "nǚ'ér", "indonesian": "anak perempuan", "example": "她有一个女儿 (Tā yǒu yīgè nǚ'ér) - Dia punya seorang anak perempuan." },
+            { "character": "朋友", "pinyin": "péngyǒu", "indonesian": "teman", "example": "她是我的朋友 (Tā shì wǒ de péngyǒu) - Dia adalah teman saya." },
+            { "character": "漂亮", "pinyin": "piàoliang", "indonesian": "cantik", "example": "你的衣服很漂亮 (Nǐ de yīfu hěn piàoliang) - Bajumu sangat cantik." },
+            { "character": "苹果", "pinyin": "píngguǒ", "indonesian": "apel", "example": "我喜欢吃苹果 (Wǒ xǐhuān chī píngguǒ) - Saya suka makan apel." },
+            { "character": "七", "pinyin": "qī", "indonesian": "tujuh", "example": "我有七个苹果 (Wǒ yǒu qī gè píngguǒ) - Saya punya tujuh buah apel." },
+            { "character": "钱", "pinyin": "qián", "indonesian": "uang", "example": "我没有钱 (Wǒ méiyǒu qián) - Saya tidak punya uang." },
+            { "character": "前面", "pinyin": "qiánmiàn", "indonesian": "di depan", "example": "我在学校前面 (Wǒ zài xuéxiào qiánmiàn) - Saya ada di depan sekolah." },
+            { "character": "请", "pinyin": "qǐng", "indonesian": "mohon, silakan", "example": "请坐 (Qǐng zuò) - Silakan duduk." },
+            { "character": "去", "pinyin": "qù", "indonesian": "pergi", "example": "我去商店 (Wǒ qù shāngdiàn) - Saya pergi ke toko." },
+            { "character": "热", "pinyin": "rè", "indonesian": "panas", "example": "今天很热 (Jīntiān hěn rè) - Hari ini sangat panas." },
+            { "character": "人", "pinyin": "rén", "indonesian": "orang", "example": "他是一个好人 (Tā shì yīgè hǎo rén) - Dia adalah orang yang baik." },
+            { "character": "认识", "pinyin": "rènshì", "indonesian": "mengenal", "example": "我很高兴认识你 (Wǒ hěn gāoxìng rènshì nǐ) - Saya sangat senang bisa berkenalan denganmu." },
+            { "character": "三", "pinyin": "sān", "indonesian": "tiga", "example": "我有三本书 (Wǒ yǒu sān běn shū) - Saya punya tiga buku." },
+            { "character": "商店", "pinyin": "shāngdiàn", "indonesian": "toko", "example": "我们去商店买东西 (Wǒmen qù shāngdiàn mǎi dōngxi) - Kami pergi ke toko untuk membeli barang." },
+            { "character": "上", "pinyin": "shàng", "indonesian": "atas, naik", "example": "请上车 (Qǐng shàng chē) - Silakan naik mobil." },
+            { "character": "上午", "pinyin": "shàngwǔ", "indonesian": "pagi", "example": "我上午去学校 (Wǒ shàngwǔ qù xuéxiào) - Saya pergi ke sekolah pada pagi hari." },
+            { "character": "谁", "pinyin": "shéi", "indonesian": "siapa", "example": "他是谁？ (Tā shì shéi?) - Siapakah dia?" },
+            { "character": "什么", "pinyin": "shénme", "indonesian": "apa", "example": "这是什么？ (Zhè shì shénme?) - Apakah ini?" },
+            { "character": "十", "pinyin": "shí", "indonesian": "sepuluh", "example": "我有十个苹果 (Wǒ yǒu shí gè píngguǒ) - Saya punya sepuluh buah apel." },
+            { "character": "时候", "pinyin": "shíhou", "indonesian": "waktu", "example": "你什么时候来？ (Nǐ shénme shíhou lái?) - Kapan kamu datang?" },
+            { "character": "是", "pinyin": "shì", "indonesian": "adalah", "example": "我是中国人 (Wǒ shì Zhōngguó rén) - Saya adalah orang Tiongkok." },
+            { "character": "书", "pinyin": "shū", "indonesian": "buku", "example": "这本书很好 (Zhè běn shū hěn hǎo) - Buku ini sangat bagus." },
+            { "character": "水", "pinyin": "shuǐ", "indonesian": "air", "example": "我想喝水 (Wǒ xiǎng hē shuǐ) - Saya ingin minum air." },
+            { "character": "水果", "pinyin": "shuǐguǒ", "indonesian": "buah-buahan", "example": "我喜欢吃水果 (Wǒ xǐhuān chī shuǐguǒ) - Saya suka makan buah-buahan." },
+            { "character": "睡觉", "pinyin": "shuìjiào", "indonesian": "tidur", "example": "我要去睡觉了 (Wǒ yào qù shuìjiào le) - Saya mau tidur." },
+            { "character": "说", "pinyin": "shuō", "indonesian": "berbicara, mengatakan", "example": "你会说汉语吗？ (Nǐ huì shuō Hànyǔ ma?) - Apakah kamu bisa berbicara bahasa Mandarin?" },
+            { "character": "四", "pinyin": "sì", "indonesian": "empat", "example": "我有四本书 (Wǒ yǒu sì běn shū) - Saya punya empat buku." },
+            { "character": "岁", "pinyin": "suì", "indonesian": "tahun (usia)", "example": "你多大岁？ (Nǐ duōdà suì?) - Berapa usiamu?" },
+            { "character": "他", "pinyin": "tā", "indonesian": "dia (laki-laki)", "example": "他 是我的朋友 (Tā shì wǒ de péngyǒu) - Dia adalah teman saya." },
+            { "character": "她", "pinyin": "tā", "indonesian": "dia (perempuan)", "example": "她是我的老师 (Tā shì wǒ de lǎoshī) - Dia adalah guru saya." },
+            { "character": "太", "pinyin": "tài", "indonesian": "terlalu", "example": "这个太贵了 (Zhège tài guì le) - Ini terlalu mahal." },
+            { "character": "天气", "pinyin": "tiānqì", "indonesian": "cuaca", "example": "今天天气很好 (Jīntiān tiānqì hěn hǎo) - Cuaca hari ini sangat baik." },
+            { "character": "听", "pinyin": "tīng", "indonesian": "mendengar, mendengarkan", "example": "我听音乐 (Wǒ tīng yīnyuè) - Saya mendengarkan musik." },
+            { "character": "同学", "pinyin": "tóngxué", "indonesian": "teman sekelas", "example": "他是我的同学 (Tā shì wǒ de tóngxué) - Dia adalah teman sekelas saya." },
+            { "character": "喂", "pinyin": "wèi", "indonesian": "halo (saat menelepon)", "example": "喂，你好！ (Wèi, nǐ hǎo!) - Halo, apa kabar!" },
+            { "character": "我", "pinyin": "wǒ", "indonesian": "saya", "example": "我是学生 (Wǒ shì xuéshēng) - Saya adalah seorang pelajar." },
+            { "character": "我们", "pinyin": "wǒmen", "indonesian": "kami, kita", "example": "我们一起吃饭 (Wǒmen yīqǐ chīfàn) - Mari kita makan bersama." },
+            { "character": "五", "pinyin": "wǔ", "indonesian": "lima", "example": "我有五个苹果 (Wǒ yǒu wǔ gè píngguǒ) - Saya punya lima buah apel." },
+            { "character": "喜欢", "pinyin": "xǐhuān", "indonesian": "suka", "example": "我喜欢你 (Wǒ xǐhuān nǐ) - Saya suka kamu." },
+            { "character": "下", "pinyin": "xià", "indonesian": "bawah, turun", "example": "请下车 (Qǐng xià chē) - Silakan turun dari mobil." },
+            { "character": "下午", "pinyin": "xiàwǔ", "indonesian": "sore", "example": "我下午去商店 (Wǒ xiàwǔ qù shāngdiàn) - Saya pergi ke toko pada sore hari." },
+            { "character": "下雨", "pinyin": "xià yǔ", "indonesian": "hujan", "example": "今天下雨了 (Jīntiān xià yǔ le) - Hari ini sudah hujan." },
+            { "character": "先生", "pinyin": "xiānsheng", "indonesian": "tuan, bapak", "example": "王先生 (Wáng xiānsheng) - Tuan Wang." },
+            { "character": "现在", "pinyin": "xiànzài", "indonesian": "sekarang", "example": "现在几点了？ (Xiànzài jǐ diǎn le?) - Sekarang pukul berapa?" },
+            { "character": "想", "pinyin": "xiǎng", "indonesian": "ingin, mau, rindu", "example": "我想喝水 (Wǒ xiǎng hē shuǐ) - Saya ingin minum air." },
+            { "character": "小", "pinyin": "xiǎo", "indonesian": "kecil", "example": "这只狗很小 (Zhè zhǐ gǒu hěn xiǎo) - Anjing ini sangat kecil." },
+            { "character": "小姐", "pinyin": "xiǎojiě", "indonesian": "nona, saudari", "example": "李小姐 (Lǐ xiǎojiě) - Nona Li." },
+            { "character": "些", "pinyin": "xiē", "indonesian": "beberapa", "example": "我买了一些衣服 (Wǒ mǎile yīxiē yīfu) - Saya membeli beberapa pakaian." },
+            { "character": "写", "pinyin": "xiě", "indonesian": "menulis", "example": "我会写汉字 (Wǒ huì xiě hànzì) - Saya bisa menulis aksara Tiongkok." },
+            { "character": "谢谢", "pinyin": "xièxie", "indonesian": "terima kasih", "example": "谢谢你 (Xièxie nǐ) - Terima kasih." },
+            { "character": "星期", "pinyin": "xīngqī", "indonesian": "minggu, hari dalam seminggu", "example": "今天是星期一 (Jīntiān shì xīngqīyī) - Hari ini adalah hari Senin." },
+            { "character": "学生", "pinyin": "xuéshēng", "indonesian": "pelajar", "example": "我是学生 (Wǒ shì xuéshēng) - Saya adalah seorang pelajar." },
+            { "character": "学习", "pinyin": "xuéxí", "indonesian": "belajar", "example": "我学习汉语 (Wǒ xuéxí Hànyǔ) - Saya belajar bahasa Mandarin." },
+            { "character": "学校", "pinyin": "xuéxiào", "indonesian": "sekolah", "example": "我去学校 (Wǒ qù xuéxiào) - Saya pergi ke sekolah." },
+            { "character": "一", "pinyin": "yī", "indonesian": "satu", "example": "我有一个苹果 (Wǒ yǒu yīgè píngguǒ) - Saya punya sebuah apel." },
+            { "character": "衣服", "pinyin": "yīfu", "indonesian": "pakaian", "example": "我想买衣服 (Wǒ xiǎng mǎi yīfu) - Saya ingin membeli pakaian." },
+            { "character": "医生", "pinyin": "yīshēng", "indonesian": "dokter", "example": "他是医生 (Tā shì yīshēng) - Dia adalah seorang dokter." },
+            { "character": "医院", "pinyin": "yīyuàn", "indonesian": "rumah sakit", "example": "我去医院看病 (Wǒ qù yīyuàn kànbìng) - Saya pergi ke rumah sakit untuk berobat." },
+            { "character": "椅子", "pinyin": "yǐzi", "indonesian": "kursi", "example": "这个椅子很好看 (Zhège yǐzi hěn hǎokàn) - Kursi ini sangat bagus." },
+            { "character": "有", "pinyin": "yǒu", "indonesian": "punya, ada", "example": "我有钱 (Wǒ yǒu qián) - Saya punya uang." },
+            { "character": "月", "pinyin": "yuè", "indonesian": "bulan", "example": "这个月很忙 (Zhège yuè hěn máng) - Bulan ini sangat sibuk." },
+            { "character": "再见", "pinyin": "zàijiàn", "indonesian": "sampai jumpa", "example": "再见 (Zàijiàn) - Sampai jumpa." },
+            { "character": "在", "pinyin": "zài", "indonesian": "di, sedang", "example": "我在家 (Wǒ zài jiā) - Saya ada di rumah." },
+            { "character": "怎么", "pinyin": "zěnme", "indonesian": "bagaimana", "example": "这个菜怎么做？ (Zhège cài zěnme zuò?) - Bagaimana cara memasak masakan ini?" },
+            { "character": "怎么样", "pinyin": "zěnmeyàng", "indonesian": "bagaimana", "example": "你的汉语怎么样？ (Nǐ de Hànyǔ zěnmeyàng?) - Bagaimana bahasa Mandarinmu?" },
+            { "character": "这", "pinyin": "zhè", "indonesian": "ini", "example": "这是我的书 (Zhè shì wǒ de shū) - Ini adalah buku saya." },
+            { "character": "中国", "pinyin": "Zhōngguó", "indonesian": "Tiongkok", "example": "我是中国人 (Wǒ shì Zhōngguó rén) - Saya adalah orang Tiongkok." },
+            { "character": "中午", "pinyin": "zhōngwǔ", "indonesian": "siang hari", "example": "我们中午吃饭 (Wǒmen zhōngwǔ chīfàn) - Kami makan siang." },
+            { "character": "住", "pinyin": "zhù", "indonesian": "tinggal", "example": "你住在哪儿？ (Nǐ zhù zài nǎr?) - Kamu tinggal di mana?" },
+            { "character": "桌子", "pinyin": "zhuōzi", "indonesian": "meja", "example": "桌子上有电脑 (Zhuōzi shàng yǒu diànnǎo) - Ada komputer di atas meja." },
+            { "character": "字", "pinyin": "zì", "indonesian": "karakter, huruf", "example": "我会写汉字 (Wǒ huì xiě hànzì) - Saya bisa menulis aksara Tiongkok." },
+            { "character": "昨天", "pinyin": "zuótiān", "indonesian": "kemarin", "example": "昨天很冷 (Zuótiān hěn lěng) - Kemarin sangat dingin." },
+            { "character": "坐", "pinyin": "zuò", "indonesian": "duduk", "example": "请坐 (Qǐng zuò) - Silakan duduk." },
+            { "character": "做", "pinyin": "zuò", "indonesian": "melakukan, membuat", "example": "你在做什么？ (Nǐ zài zuò shénme?) - Kamu sedang melakukan apa?" },
+            { "character": "走", "pinyin": "zǒu", "indonesian": "pergi, berjalan", "example": "我们一起走吧 (Wǒmen yīqǐ zǒu ba) - Mari kita pergi bersama." }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const vocabContainer = document.getElementById('vocabulary-container');
+            const initialsContainer = document.getElementById('initials-container');
+
+            // Render kartu fonetik
+            initials.forEach(item => {
+                const initialsCard = document.createElement('div');
+                initialsCard.className = "initials-card bg-gray-100 p-4 rounded-xl shadow-md border border-gray-200 transition-all duration-300 hover:bg-gray-200 text-center";
+                initialsCard.innerHTML = `
+                    <h3 class="text-3xl font-bold text-blue-600 mb-1">${item.pinyin}</h3>
+                    <p class="text-lg text-gray-500 font-semibold">${item.bopomofo}</p>
+                `;
+                initialsContainer.appendChild(initialsCard);
+            });
+
+            // Render kartu kosakata utama
+            vocabulary.forEach(item => {
+                const vocabCard = document.createElement('div');
+                vocabCard.className = "bg-white p-6 rounded-xl shadow-md border border-gray-200 transition-transform duration-300 hover:scale-105";
+                vocabCard.innerHTML = `
+                    <h2 class="text-3xl font-bold text-blue-600 mb-2">${item.character}</h2>
+                    <p class="text-lg text-gray-700 font-semibold mb-1">${item.pinyin}</p>
+                    <p class="text-base text-gray-500 mb-4">${item.indonesian}</p>
+                    <p class="text-sm text-gray-600 italic">"${item.example}"</p>
+                `;
+                vocabContainer.appendChild(vocabCard);
+            });
+        });
+    </script>
+</body>
+</html>
